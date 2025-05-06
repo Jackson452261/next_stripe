@@ -81,7 +81,7 @@ export default function ProductSearch({ products }: ProductSearchProps) {
           ))
         ) : (
           <div className="col-span-3 text-center py-10">
-            <p className="text-gray-500 text-lg">No products found matching "{searchTerm}"</p>
+        <p className="text-gray-500 text-lg">No products found matching &quot;{searchTerm}&quot;</p>
           </div>
         )}
       </div>
