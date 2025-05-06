@@ -1,6 +1,14 @@
 // app/products/[id]/page.tsx
 import Stripe from "stripe";
 import Image from "next/image";
+import { Metadata } from "next";
+
+// 定義頁面參數類型
+interface ProductPageParams {
+  params: {
+    id: string;
+  };
+}
 
 // 獲取產品數據的函數
 async function getProduct(id: string) {
@@ -28,7 +36,17 @@ async function getProduct(id: string) {
   }
 }
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
+// 生成元數據
+export async function generateMetadata({ params }: ProductPageParams): Promise<Metadata> {
+  const product = await getProduct(params.id);
+  
+  return {
+    title: product ? `${product.name} | 我的商店` : '產品未找到',
+    description: product?.description || '產品詳情頁面',
+  };
+}
+
+export default async function ProductPage({ params }: ProductPageParams) {
   // 從 params 中獲取產品 ID
   const id = params.id;
 

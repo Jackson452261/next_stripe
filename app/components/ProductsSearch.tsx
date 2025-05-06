@@ -49,11 +49,13 @@ export default function ProductSearch({ products }: ProductSearchProps) {
               {/* 產品圖片 */}
               <div className="aspect-square relative bg-gray-100">
                 {product.images[0] ? (
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
+                <Image
+                src={product.images[0]}
+                alt={product.name}
+                width={500}  // 添加寬度
+                height={500} // 添加高度
+                className="w-full h-full object-cover"
+              />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gray-200">
                     <span className="text-gray-400">No image</span>
