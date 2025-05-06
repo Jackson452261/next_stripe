@@ -4,11 +4,10 @@ import Image from "next/image";
 import { Metadata } from "next";
 
 // 定義頁面參數類型
-interface ProductPageParams {
-  params: {
-    id: string;
-  };
-}
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
 // 獲取產品數據的函數
 async function getProduct(id: string) {
@@ -37,7 +36,7 @@ async function getProduct(id: string) {
 }
 
 // 生成元數據
-export async function generateMetadata({ params }: ProductPageParams): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProduct(params.id);
   
   return {
@@ -46,7 +45,7 @@ export async function generateMetadata({ params }: ProductPageParams): Promise<M
   };
 }
 
-export default async function ProductPage({ params }: ProductPageParams) {
+export default async function ProductPage({ params }: Props) {
   // 從 params 中獲取產品 ID
   const id = params.id;
 
@@ -73,13 +72,15 @@ export default async function ProductPage({ params }: ProductPageParams) {
         {/* 產品圖片 */}
         <div className="mb-8">
           {product.images && product.images[0] ? (
-            <Image
-              src={product.images[0]} // Stripe 提供的圖片 URL
-              alt={product.name}
-              width={500}
-              height={500}
-              className="rounded-lg shadow-md"
-            />
+            <div className="relative aspect-square w-full max-w-md mx-auto">
+              <Image
+                src={product.images[0]} // Stripe 提供的圖片 URL
+                alt={product.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 500px"
+                className="object-contain"
+              />
+            </div>
           ) : (
             <div className="w-full h-64 flex items-center justify-center bg-gray-100">
               <span className="text-gray-400">無圖片</span>
