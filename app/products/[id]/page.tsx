@@ -3,12 +3,6 @@ import Stripe from "stripe";
 import Image from "next/image";
 import { Metadata } from "next";
 
-// 定義頁面參數類型
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 // 獲取產品數據的函數
 async function getProduct(id: string) {
   try {
@@ -36,7 +30,11 @@ async function getProduct(id: string) {
 }
 
 // 生成元數據
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const product = await getProduct(params.id);
   
   return {
@@ -45,7 +43,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProductPage({ params }: Props) {
+// 頁面組件
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   // 從 params 中獲取產品 ID
   const id = params.id;
 
