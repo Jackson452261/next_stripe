@@ -49,7 +49,7 @@ export default function ProductSearch({ products }: ProductSearchProps) {
               {/* 產品圖片 */}
               <div className="aspect-square relative bg-gray-100">
                 {product.images[0] ? (
-                  <img
+                  <Image
                     src={product.images[0]}
                     alt={product.name}
                     className="w-full h-full object-cover"
